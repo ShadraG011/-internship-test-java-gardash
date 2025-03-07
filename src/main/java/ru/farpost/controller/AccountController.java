@@ -60,7 +60,7 @@ public class AccountController {
      * @param updatedAccount Объект {@link AccountDTO} преобразованный из JSON объекта.
      * @return JSON объект с информацией об измененном аккаунте.
      */
-    @RequestMapping(value = "/{accountId}/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/{accountId}/update", method = RequestMethod.PUT)
     public ResponseEntity<AccountDTO> updateAccount(@PathVariable("accountId") Long accountId,
                                                  @RequestBody AccountDTO updatedAccount) {
         return ResponseEntity.ok(accountService.updateAccount(accountId, updatedAccount.getUsername()));

@@ -72,14 +72,15 @@ public class OperationService {
 
         Account account = accountService.findAccountById(accountId, Account.class);
 
-        if (type == OperationTypes.WITHDRAW && account.getBalance().compareTo(amount) < 0) {
-            throw new ErrorResponse(HttpStatus.BAD_REQUEST, ExceptionsMessage.INSUFFICIENT_FUNDS);
-        }
-
-        if (type == OperationTypes.DEPOSIT) {
-            account.setBalance(account.getBalance().add(amount));
-        } else {
-            account.setBalance(account.getBalance().subtract(amount));
+        switch (type){
+            case OperationTypes.DEPOSIT -> account.setBalance(account.getBalance().add(amount));
+            case OperationTypes.WITHDRAW -> {
+                if (account.getBalance().compareTo(amount) < 0)
+                    throw new ErrorResponse(HttpStatus.BAD_REQUEST, ExceptionsMessage.INSUFFICIENT_FUNDS);
+                else
+                    account.setBalance(account.getBalance().subtract(amount));
+            }
+            default -> throw new ErrorResponse(HttpStatus.BAD_REQUEST, ExceptionsMessage.UNSUPPORTED_TYPE_OPERATION);
         }
 
         String operationDescription = String.format("%s на сумму: %s", type.getDescription(), amount);

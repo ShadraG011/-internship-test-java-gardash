@@ -118,7 +118,7 @@ public class AccountService {
         } else if (clazz == Account.class) {
             return clazz.cast(account);
         } else {
-            throw new ErrorResponse(HttpStatus.NOT_FOUND, ExceptionsMessage.UNSUPPORTED_TYPE);
+            throw new ErrorResponse(HttpStatus.NOT_FOUND, ExceptionsMessage.UNSUPPORTED_TYPE_CLASS);
         }
 
     }
