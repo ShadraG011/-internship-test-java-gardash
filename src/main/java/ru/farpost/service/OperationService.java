@@ -104,8 +104,9 @@ public class OperationService {
      * @return Список операций аккаунта.
      */
     public List<OperationDTO> getOperationsByAccountIdAndDateBetween(Long accountId, LocalDateTime from, LocalDateTime to) {
+        Account account = accountService.findAccountById(accountId, Account.class);
         return operationRepository
-                .findByAccountIdAndDateBetween(accountId, from, to)
+                .findByAccountIdAndDateBetween(account.getId(), from, to)
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());
     }
